@@ -8,4 +8,8 @@ class CreateProducts < ActiveRecord::Migration
       t.timestamps null: false
     end
   end
+
+  has_many :reviews
+  has_many :users, through: :reviews
+
 end
