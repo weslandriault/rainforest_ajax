@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
-  get 'users/new'
+  # get 'sessions/new'
 
-  get 'users/create'
+  # get 'sessions/create'
+
+  # get 'sessions/destroy'
+  resources :sessions, only: [:new, :create, :destroy]
+
+  # get 'users/new'
+
+  # get 'users/create'
   resources :users, only: [:new , :create]
 
   # get 'products/index'
