@@ -1,0 +1,33 @@
+<%= form_for (@product) do |f|  %>
+	
+	<div class="field">
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	</div>
+
+	<div class="field">
+		<%= f.label :description %>
+		<%= f.text_field :description %>
+	</div>
+
+	<div class="field">
+		<%=  f.label :price_in_cents %>
+		<%= f.number_field :price_in_cents %>
+	</div>
+	
+	<div class="actions">
+		<%= f.submit %>
+	</div>
+	
+	<% if @product.errors.any? %>
+
+		<div id="error_explanation">
+			<h3><%= pluralize(@product.errors.count, "error") %> occurred when trying to create a new product:</h3>
+
+			<% @product.errors.full_messages.each do |error| %>
+				<li><%= error %></li>
+			<% end %>
+		</div>
+	<% end %>
+
+<% end %>

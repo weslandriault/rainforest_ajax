@@ -1,0 +1,10 @@
+<h1>Rainforest</h1>
+
+<h3>All Products</h3>
+
+<% @products.each do |product| %>
+	<p><strong>Name:</strong> <%= product.name %></p>
+	<p><strong>Description: </strong><%= product.description %></p>
+	<p><strong>Formatted Price: </strong><%= product.price_in_cents %></p>
+	<br>
+<% end %>
