@@ -1,7 +1,4 @@
 class Product < ActiveRecord::Base
-	has_many :reviews
-	has_many :users, through: :reviews
-
 	validates :name, presence: true
 	validates :description, presence: true
 	validates :price_in_cents, numericality: {only_integer: true}
@@ -11,4 +8,6 @@ class Product < ActiveRecord::Base
 		sprintf("%.2f", price_in_dollars)
 	end
 
+	has_many :reviews
+	has_many :users, through: :reviews
 end
