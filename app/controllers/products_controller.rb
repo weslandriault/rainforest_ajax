@@ -1,32 +1,36 @@
 class ProductsController < ApplicationController
+  def find_product
+  	@product = Product.find(params[:id])
+  end
+
   def index
   	@products = Product.all
   end
-
-  def show
-  @product = Product.find(params[:id])
-
-  if current_user
-    @review = @product.reviews.build
-  end
-end
 
   def new
   	@product = Product.new
   end
 
-  def edit
+  def show
   	@product = Product.find(params[:id])
+
+    if current_user
+      @review = @product.reviews.build
+    end
   end
 
+  def edit
+  	@product = product
+  end
+  
   def create
   	@product = Product.new(product_params)
 
-  	if @product.save
-  		redirect_to products_url
-  	else
-  		render :new
-  	end
+    if @product.save
+      redirect_to products_url
+    else
+      render :new
+    end
   end
 
   def update
@@ -40,24 +44,13 @@ end
   end
 
   def destroy
-  	@product = Product.find(params[:id])
-
+  	@product = find_product
   	@product.destroy
-  	redirect_to products_url
+  	redirect_to product_path
   end
-
-
 
   private
-	def product_params
-		params.require(:product).permit(:name, :description, :price_in_cents)	
+  def product_params
+  	params.require(:product).permit(:name, :description, :price_in_cents)
   end
-
-  # def formatted_price
-  #   price_in_dollars = price_in_cents.to_f / 100
-  #   sprintf("%.2f", price_in_dollars)
-  # end
-
- 
-
 end
