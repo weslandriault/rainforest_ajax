@@ -1,8 +1,7 @@
-<%= link_to "Add a product", new_product_path %>
-
+<%=  link_to "Add a product", new_product_path %>
 <h1>Rainforest</h1>
+<h3>Products <small><%= page_entries_info @products %></small></h3>
 <!-- <a href="" id="my-link" data-message="Someone clicked me!">My Link</a> -->
-<h3>Products <small><%= page_entries_info @products %></small>	</h3>
 
 <!-- <script>
 	$("#my-link").click(function(){
@@ -14,6 +13,8 @@
 		<%= text_field_tag :search, params[:search] %>
 		<%= submit_tag "Search" %>
 	<% end %>
+
+<h3>All Products</h3>
 
 <div id="products">
 	<%= render @products %>
@@ -28,7 +29,6 @@
 			document.getElementById('products').innerHTML = this.responseText;
 		}
 	}
-
 	var form = document.getElementById('search-form');
 	form.addEventListener('submit', function(event){ 
 		event.preventDefault();
@@ -41,5 +41,3 @@
 		xhr.send()
 	});
  </script> -->
-
-

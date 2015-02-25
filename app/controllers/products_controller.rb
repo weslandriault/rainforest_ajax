@@ -1,13 +1,12 @@
 class ProductsController < ApplicationController
   def find_product
-  	@product = Product.find(params[:id])
+    @product = Product.find(params[:id])
   end
 
   def index
-  	@products = if params[:search]
-      Product.where("LOWER(name) LIKE LOWER(?)", "%#{params[:search]}%")
-    else
-      Product.order('products.created_at DESC').page(params[:page])
+    @products = Product.order('products.created_at DESC').page(params[:page])
+    if params[:search]
+      @products = @products.where("LOWER(name) LIKE LOWER(?)", "%#{params[:search]}%")
     end
 
     # if request.xhr?
@@ -21,11 +20,11 @@ class ProductsController < ApplicationController
   end
 
   def new
-  	@product = Product.new
+    @product = Product.new
   end
 
   def show
-  	@product = Product.find(params[:id])
+    @product = Product.find(params[:id])
 
     if current_user
       @review = @product.reviews.build
@@ -33,11 +32,11 @@ class ProductsController < ApplicationController
   end
 
   def edit
-  	@product = product
+    @product = product
   end
   
   def create
-  	@product = Product.new(product_params)
+    @product = Product.new(product_params)
 
     if @product.save
       redirect_to products_url
@@ -47,23 +46,23 @@ class ProductsController < ApplicationController
   end
 
   def update
-  	@product = Product.find(params[:id])
+    @product = Product.find(params[:id])
 
-  	if @product.update_attributes(product_params)
-  		redirect_to product_path(@product)
-  	else
-  		render :edit
-  	end
+    if @product.update_attributes(product_params)
+      redirect_to product_path(@product)
+    else
+      render :edit
+    end
   end
 
   def destroy
-  	@product = find_product
-  	@product.destroy
-  	redirect_to product_path
+    @product = find_product
+    @product.destroy
+    redirect_to product_path
   end
 
   private
   def product_params
-  	params.require(:product).permit(:name, :description, :price_in_cents)
+    params.require(:product).permit(:name, :description, :price_in_cents)
   end
 end
