@@ -1,5 +1,8 @@
+<%= link_to "Add a product", new_product_path %>
+
 <h1>Rainforest</h1>
 <!-- <a href="" id="my-link" data-message="Someone clicked me!">My Link</a> -->
+<h3>Products <small><%= page_entries_info @products %></small>	</h3>
 
 <!-- <script>
 	$("#my-link").click(function(){
@@ -12,11 +15,11 @@
 		<%= submit_tag "Search" %>
 	<% end %>
 
-<h3>All Products</h3>
-
 <div id="products">
 	<%= render @products %>
 </div>
+
+<%= paginate @products %>
 
 <!-- <script type="text/javascript">
 	function display_search_results() {
