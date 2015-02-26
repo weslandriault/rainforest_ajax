@@ -21,9 +21,11 @@ class ReviewsController < ApplicationController
 
 
 	if @review.save
-		redirect_to products_path, notice: 'Review posted!'
+		format.html {redirect_to product_path(@product.id), notice: 'Review posted!' }
+    format.js {} 
 	else
-		render 'products/show'
+		render 'products/show', alert: 'There was an error. Review couldn\'t be created.'
+    format.js{}
 	end
   end
 
