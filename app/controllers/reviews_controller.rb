@@ -19,14 +19,15 @@ class ReviewsController < ApplicationController
     #   user_id: current_user.id
     # )
 
-
-	if @review.save
-		format.html {redirect_to product_path(@product.id), notice: 'Review posted!' }
-    format.js {} 
-	else
-		render 'products/show', alert: 'There was an error. Review couldn\'t be created.'
-    format.js{}
-	end
+    respond_to do |format|
+    	if @review.save
+    		format.html {redirect_to product_path(@product.id), notice: 'Review posted!' }
+        format.js {} 
+    	else
+    		render 'products/show', alert: 'There was an error. Review couldn\'t be created.'
+        format.js{}
+    	end
+    end
   end
 
   def destroy
