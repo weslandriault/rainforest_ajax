@@ -1,0 +1,8 @@
+	<% @product.reviews.each do |review| %>
+	<h4><%= review.title %></h4>
+	<p> <%= review.comment %>
+		<% if review.user != nil %>
+			<p><em>By: <%= review.user.email %></em></p>
+			<p>Added on: <%= review.created_at %></p>
+		<% end %>
+	<% end %>

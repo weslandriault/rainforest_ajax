@@ -2,57 +2,72 @@
 
 <h1><%= @product.name %></h1>
 
-<h3><%= @product.formatted_price %></h3>
+<h3>$<%= @product.formatted_price %></h3>
 
 <p><%= @product.description %></p>
 
 <h2 style="text-decoration: underline;">Reviews</h2>
 
-<% @product.reviews.each do |review| %>
-	<h4><%= review.title %></h4>
-	<p> <%= review.comment %>
-	<% if review.user != nil %>
-		<p><em>By: <%= review.user.email %></em></p>
-		<p>Added on: <%= review.created_at %></p>
-	<% end %>
-<% end %>
+<div id="review-list">
+	<%= render :partial => "reviews" %>
+</div>
 
-<% if current_user %>
-	<h3>Add a new review</h3>
+<div id="new-review">
+	<% if current_user %>
+		<h3>Add a new review</h3>
 
-	<%= form_for([@product, @review], :remote => true) do |f| %>
+		<%= form_for([@product, @review], :remote => true) do |f| %>
 
-		<% if @review.errors.any? %>
-			<div id="error_explanation">
-				<h3> <%= pluralize(@reviews.errors.count, "error") %> occured when trying to submit your review</h3>
+			<% if @review.errors.any? %>
+				<div id="error_explanation">
+					<h3> <%= pluralize(@reviews.errors.count, "error") %> occured when trying to submit your review</h3>
 
-				<ul>
-					<% @reviews.errors.full_messages.each do |error| %>
-						<li><%= error %></li>
-					<% end %>
-				</ul>
+					<ul>
+						<% @reviews.errors.full_messages.each do |error| %>
+							<li><%= error %></li>
+						<% end %>
+					</ul>
+				</div>
+			<% end %>
+			
+			<div class="field">
+				<%= f.label :title %><br>
+				<%= f.text_field :title %>
 			</div>
+
+			<div class="field">
+				<%= f.label :comment %><br>
+				<%= f.text_field :comment %>
+			</div>
+
+			<div class="actions" style="margin-top: 10px;">
+				<%= f.submit %>
+			</div>
+
 		<% end %>
-		
-		<div class="field">
-			<%= f.label :title %><br>
-			<%= f.text_field :title %>
-		</div>
 
-		<div class="field">
-			<%= f.label :comment %><br>
-			<%= f.text_field :comment %>
-		</div>
-
-		<div class="actions" style="margin-top: 10px;">
-			<%= f.submit %>
-		</div>
+	<% else %>
+		<p>Please <%= link_to "log in", new_session_path %> to write a new review.</p>
 
 	<% end %>
+</div>
 
-<% else %>
-	<p>Please <%= link_to "log in", new_session_path %> to write a new review.</p>
+<script type="text/javascript">
+	$(function(){
+		$("#new_review")
+			.on('ajax:beforeSend', function() {
+				$("input[type='submit']")
+				.val('Saving review...')
+				.attr('disabled', 'disabled');
+			})
 
-<% end %>
+			.on('ajax:complete', function() {
+				$("input[type='submit']")
+				.val('Create Review')
+				.removeAttr('disabled');
+			});
+	});
+</script>
+
 
 
