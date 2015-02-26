@@ -1,8 +1,26 @@
 $(document).on('ready page:load', function() {
+	var nextPageUrl;
+
 	$(window).scroll(function() {
-		if ($(window).scrollTop() > $(document).height() - $(window).height() - 50) {
-			console.log($('.pagination span.next').children().attr('href'));
-			$.getScript($('.pagination span.next').children().attr('href'));
+		if ($(window).scrollTop() > $(document).height() - $(window).height() - 100) {
+			console.log($('.pagination span.next > a').attr('href'));
+			
+			var nextPage = $('.pagination span.next > a').attr('href')
+
+			if ( nextPage !== nextPageUrl ) {
+				nextPageUrl = nextPage
+
+				if ( nextPageUrl ) {
+					$.ajax({
+            			url: nextPageUrl,
+            			dataType: 'script',
+            			type: 'GET'
+         			 });
+				}
+
+			}
+
+			
 		}
 	});
 
